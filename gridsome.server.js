@@ -19,17 +19,19 @@ module.exports = function (api) {
     })
 
     for (const item of data.results) {
-      let path = `/skills/${item.index}`
-      console.log(item.url);
+
+
       const { data } = await axios.get(item.url)
       const skill = data
+      let path = `/skills/${skill.index}`
       console.log(skill);
       skills.addNode({
-        id: item.index,
+        path: path,
+        id: skill.index,
         title: item.name,
         fields: {
           name: skill.name,
-          description: skill.desc
+          description: skill.desc[0]
         }
       })
     }

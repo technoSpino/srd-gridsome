@@ -6,23 +6,35 @@
           <v-list-tile slot="activator">
             <v-list-tile-title>Skills</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile v-for="skill in $static.skills.edges" :key="skill.id" avatar @click>
+          <v-list-tile v-for="skill in $static.skills.edges" :key="skill.id" avatar>
             <v-list-tile-content>
-              <v-list-tile-title v-text="skill.node.title"></v-list-tile-title>
+              <g-link :to="skill.node.path">
+                <v-list-tile-title v-text="skill.node.title"></v-list-tile-title>
+              </g-link>
             </v-list-tile-content>
           </v-list-tile>
         </v-list-group>
+        <v-divider></v-divider>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar app></v-toolbar>
+    <v-toolbar app>
+      <v-toolbar-title>{{section}}: {{title}}</v-toolbar-title>
+    </v-toolbar>
     <v-content>
       <v-container fluid>
         <slot/>
       </v-container>
     </v-content>
-    <v-footer app></v-footer>
+    <v-footer app>stigg</v-footer>
   </v-app>
 </template>
+
+<script>
+export default {
+  props: ["title", "section"]
+};
+</script>
+
 
 <static-query>
 query {
@@ -32,6 +44,7 @@ skills: allSkill{
         id
         title
         description
+        path
       }
     }
   }
